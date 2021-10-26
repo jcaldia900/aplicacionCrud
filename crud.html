@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    </head>
+
+<body>
+    <!--container con filas y columnas en bootstrap-->
+    <!-- por defecto nos pone 12 en md-5, pero nosotros distribuimos y si ponemos 5, ya sabemos q 12-5=7 y el 7 iria a la siguiente columna-->
+    <div class="container" x-data="crudAlpine()" x-init="iniciar"> <!--con x-data creas un nuevo componente en base a una funcion ()s-->
+        <div class="row">
+            <div class="col-md-5">
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Empleados
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="Nombre">Nombre</label>
+                            <!--x-model sirve para hacer referencia al input y coger su valor-->
+                            <input type="text" x-model="nombre" 
+                            class="form-control" name="name" id="nombreId" aria-describedby="helpId"
+                                placeholder="Nombre del empleado">
+                            <small id="helpId" class="form-text text-muted">Escribe el nombre del empleado</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Correo">Correo</label>
+                            <input type="text"
+                            x-model="correo" class="form-control" name="" id="" aria-describedby="helpId"
+                                placeholder="Correo del empleado">
+                            <small id="helpId" class="form-text text-muted">Escribe correo del empleado</small>
+                        </div>
+                    </div>
+                    <!-- b4-bgroup-def-->
+                    <div class="btn-group" role="group" aria-label="">
+                        <button type="button" class="btn btn-primary" x-on:click="accion()">Agregar</button><!-- le añadimos la funcion accion() a través del onclick-->
+                        <!-- btn-warning pone de otro color el boton-->
+                        <button type="button" class="btn btn-warning">Modificar</button>
+                       
+                    </div>
+
+
+
+                    <div class="card-footer text-muted">
+                        Footer
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>15</td>
+                            <td>Óscar</td>
+                            <td>correo@gmail.com</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-info">Seleccionar</button>
+                                    <button type="button" class="btn btn-danger">Borrar</button>
+                                  
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    function crudAlpine(){
+        return{
+            id:0,
+            /*ya están definidos en los inputs*/
+            //cuando se inicia ya están creados
+            nombre:"",
+            correo:"",
+
+            iniciar:function(){
+                alert("Hola soy tu crud")
+            },
+            accion:function(){
+                var datosEnvio={method: "POST",body: JSON.stringify({nombre:this.nombre,correo:this.correo})};//izqda nombre/correo parametros q necesita la app,this.nombre son los datos a enviar
+                fetch("http://localhost:5500/empleados?insertar=1", datosEnvio).
+                then(r=>r.json()).
+                then((datosEmpleado)=>{console.log(datosEmpleado)}). 
+                catch("ERROR:"+console.log);
+            }
+
+        }
+    }
+</script>
+
+</html>

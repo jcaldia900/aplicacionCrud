@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+</head>
+<body>
+    <div x-data="{titulo:'Los Cruds son inevitables'}">
+    <!-- para mostrar el valor de titulo -->
+        <div x-text="titulo"></div>
+    <!-- coge el valor modelo titulo para un input de texto-->
+        <input type="text" x-model="titulo">
+    <!-- directiva x-on interactuar click, o cursos-->
+    <!--aqui por ejemplo al clickar el boton, cambiará el valor a titulo y pondrá lo q tu le digas-->
+    <button x-on:click="titulo='Hola mundo!'">Boton Prueba</button>
+
+    <!-- condicionales como en JS-->
+    <!-- si esto sucede,si el titulo es crud,aparece el div de abajo suscribete-->
+
+    <template x-if="titulo=='crud'"> 
+      <div>Suscríbete al canal</div>  
+
+    </template>
+</div>
+</body>
+</html>
